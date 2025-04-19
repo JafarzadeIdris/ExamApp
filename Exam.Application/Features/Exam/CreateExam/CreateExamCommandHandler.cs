@@ -1,24 +1,27 @@
 ﻿using CSharpFunctionalExtensions;
 using Exam.Application.Abstractions.Commands;
-using Exam.Application.Repositories;
+using Exam.Application.Abstractions.Error;
+using Exam.Application.Abstractions.Repository;
 using Exam.Domain.Entities;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Exam.Application.Features.Exam.CreateExam
 {
-    public class CreateExamCommandHandler : ICommandHandler<CreateExamCommand, Guid>
-    {
-        private readonly IRepository<ExamEntity> _repository;
+    //public class CreateExamCommandHandler : ICommandHandler<CreateExamCommand, Unit>
+    //{
+    //    private readonly IRepository<ExamEntity> _repository;
+    //    private readonly IServiceScopeFactory _scopeFactory;
 
-        public CreateExamCommandHandler(IRepository<ExamEntity> repository)
-        {
-            _repository = repository;
-        }
+    //    public CreateExamCommandHandler(IRepository<ExamEntity> repository, IServiceScopeFactory scopeFactory)
+    //    {
+    //        _repository = repository;
+    //        _scopeFactory = scopeFactory;
+    //    }
 
-        public async Task<Result<Guid>> Handle(CreateExamCommand request, CancellationToken cancellationToken)
-        {
-                var response = await _repository.AddAsync(new ExamEntity { Name = "Test", Id = Guid.NewGuid() }, cancellationToken);
-
-            return await Task.FromResult(Result.Success<Guid>(Guid.NewGuid()));
-        }
-    }
+    //    public Task<Result<Unit, IDomainError>> Handle(CreateExamCommand request, CancellationToken cancellationToken)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

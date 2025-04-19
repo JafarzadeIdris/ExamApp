@@ -19,7 +19,6 @@ namespace Exam.Application.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            _logger.LogError($"salam");
             _logger.LogInformation($"Handling process started for {request}");
             var metric = Stopwatch.StartNew();
             var response = await next();

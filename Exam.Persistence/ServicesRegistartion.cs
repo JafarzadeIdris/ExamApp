@@ -1,10 +1,10 @@
-﻿using Exam.Application.Repositories;
+﻿using Exam.Application;
+using Exam.Application.Abstractions.Repository;
 using Exam.Persistence.Contexts;
 using Exam.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Exam.Persistence
 {
@@ -12,14 +12,13 @@ namespace Exam.Persistence
     {
         public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddDbContext<ExamDbContext>(options =>
                  options.UseSqlServer(
                  configuration.GetConnectionString("DefaultConnection")
-                 ), ServiceLifetime.Transient);
-
+                 ), ServiceLifetime.Scoped);
+            services.AddApplicationLayer();
             return services;
         }
     }

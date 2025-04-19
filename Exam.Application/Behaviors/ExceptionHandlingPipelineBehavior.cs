@@ -1,4 +1,6 @@
 ﻿using CSharpFunctionalExtensions;
+using Exam.Application.Abstractions.Error;
+using Exam.Application.Errors;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
@@ -10,47 +12,23 @@ namespace Exam.Application.Behaviors
     {
         private readonly ILogger<ExceptionHandlingPipelineBehavior<TRequest, TResponse>> _logger = logger;
 
-        public async Task<TResponse> Handle(
-            TRequest request,
-            RequestHandlerDelegate<TResponse> next,
-            CancellationToken cancellationToken)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             try
             {
                 return await next();
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                _logger.LogError(ex,
-                    "❌ Exception occurred while handling {RequestType}: {Message}",
-                    typeof(TRequest).Name,
-                    ex.Message);
-
-                var failureResult = MapExceptionToFailureResult(ex);
+                _logger.LogError(exception, "❌ Exception occurred while handling {RequestType}: {Message}", typeof(TRequest).Name, exception.Message);
+                var failureResult = Result.Failure<Guid, IDomainError>(new DomainError(exception.Message));
 
                 if (failureResult is TResponse response)
-                {
-                    _logger.LogWarning(" Returning failure result for {RequestType} as {ResponseType}",
-                        typeof(TRequest).Name,
-                        typeof(TResponse).Name);
-
                     return response;
-                }
-
-                _logger.LogCritical(" Could not cast failure result to expected type {TResponse}", typeof(TResponse).Name);
-                throw new InvalidCastException($"Failed to cast error result to expected response type: {typeof(TResponse).Name}");
+                else
+                    throw new InvalidOperationException($"The response type {typeof(TResponse).Name} is not compatible with the failure result.");
             }
         }
 
-        private object? MapExceptionToFailureResult(Exception ex)
-        {
-            return ex switch
-            {
-                ValidationException validationEx => Result.Failure<Unit>(validationEx.Message),
-
-                _ => null 
-            };
-        }
     }
-
 }

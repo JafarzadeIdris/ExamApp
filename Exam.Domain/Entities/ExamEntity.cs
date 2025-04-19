@@ -2,8 +2,15 @@
 
 namespace Exam.Domain.Entities
 {
-    public class ExamEntity:BaseEntity
+    public class ExamEntity : BaseEntity
     {
-        public string? Name {  get; set; }
+        public DateTime ExamDate { get; set; }
+        public int Score { get; set; }
+
+        public Guid LessonId { get; set; }
+        public LessonEntity Lesson { get; set; }
+
+        public Guid StudentId { get; set; }
+        public StudentEntity Student { get; set; }
     }
 }

@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddPersistenceLayer(builder.Configuration);
-builder.Services.AddApplicationLayer();
 
 
 

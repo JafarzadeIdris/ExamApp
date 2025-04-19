@@ -6,16 +6,13 @@ using System.Diagnostics;
 
 namespace Exam.MVC.Controllers
 {
-    public class HomeController(ISender sender, ILogger<HomeController> logger) : Controller
+    public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger=logger;
-        private readonly ISender _sender = sender;
+     
 
 
-        public IActionResult Index(CancellationToken cancellationToken)
+        public IActionResult Index()
         {
-            _logger.LogError("Index action called");
-           var res= _sender.Send(new CreateExamCommand(Guid.NewGuid()), cancellationToken);
             return View();
         }
 
@@ -24,10 +21,5 @@ namespace Exam.MVC.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
