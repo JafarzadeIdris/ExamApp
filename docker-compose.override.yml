@@ -20,3 +20,13 @@ services:
       - "1433:1433"
     networks:
       - my-app-network
+  elasticsearch:
+    ports:
+      - 9200:9200
+    networks:
+      - my-app-network
+  kibana:
+   ports:
+    - 5601:5601
+   networks:
+      - my-app-network

@@ -1,6 +1,4 @@
 ﻿using Exam.Application.Behaviors;
-using Exam.Application.Repositories;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Exam.Application
@@ -14,6 +12,7 @@ namespace Exam.Application
             {
                 config.RegisterServicesFromAssembly(typeof(ServicesRegistration).Assembly);
                 config.AddOpenBehavior(typeof(ExceptionHandlingPipelineBehavior<,>));
+                config.AddOpenBehavior(typeof(LoggingPipelineBehavior<,>));
             });
             return services;
         }

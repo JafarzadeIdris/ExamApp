@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Exam.Application\Exam.Application.csproj" />
+    <ProjectReference Include="..\Exam.Infrastructure\Exam.Infrastructure.csproj" />
     <ProjectReference Include="..\Exam.Persistence\Exam.Persistence.csproj" />
   </ItemGroup>
 

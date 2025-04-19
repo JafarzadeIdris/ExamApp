@@ -16,7 +16,7 @@ namespace Exam.Application.Features.Exam.CreateExam
 
         public async Task<Result<Guid>> Handle(CreateExamCommand request, CancellationToken cancellationToken)
         {
-            var response = await _repository.AddAsync(new ExamEntity { Name = "Test", Id = Guid.NewGuid() }, cancellationToken);
+                var response = await _repository.AddAsync(new ExamEntity { Name = "Test", Id = Guid.NewGuid() }, cancellationToken);
 
             return await Task.FromResult(Result.Success<Guid>(Guid.NewGuid()));
         }

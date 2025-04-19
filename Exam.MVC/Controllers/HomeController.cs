@@ -8,12 +8,13 @@ namespace Exam.MVC.Controllers
 {
     public class HomeController(ISender sender, ILogger<HomeController> logger) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> _logger=logger;
         private readonly ISender _sender = sender;
 
 
         public IActionResult Index(CancellationToken cancellationToken)
         {
+            _logger.LogError("Index action called");
            var res= _sender.Send(new CreateExamCommand(Guid.NewGuid()), cancellationToken);
             return View();
         }

@@ -1,11 +1,27 @@
 using Exam.Application;
+using Exam.Infrastructure;
 using Exam.Persistence;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddPersistenceLayer(builder.Configuration);
 builder.Services.AddApplicationLayer();
+
+
+
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
+builder.Configuration
+    .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{environment}.json", optional: true)
+    .AddEnvironmentVariables();
+
+Log.Logger = SerilogConfiguration.ConfigureSerilog(builder.Configuration, environment);
+builder.Host.UseSerilog();
+
 
 
 var app = builder.Build();
