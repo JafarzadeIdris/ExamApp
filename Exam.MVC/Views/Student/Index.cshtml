@@ -1,0 +1,61 @@
+﻿@using Exam.Application.Dtos.Student
+@model List<StudentDto>
+
+@{
+    ViewData["Title"] = "Student Page";
+}
+
+<div class="container">
+    <div class="row card shadow-sm mt-4 p-4">
+        <h1 class="text-center mb-4">Student List</h1>
+
+        <div class="row justify-content-end mb-3">
+            <div class="col-auto">
+                <a asp-controller="Student" asp-action="Create" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Create New Student
+                </a>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>Class</th>
+                    <th style="width: 180px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var student in Model)
+                {
+                    <tr>
+                        <td>@student.Number</td>
+                        <td>@student.Name</td>
+                        <td>@student.Surname</td>
+                        <td>@student.ClassLevel</td>
+                        <td class="d-flex gap-2">
+                            <a asp-controller="Student"
+                               asp-action="Update"
+                               asp-route-studentId="@student.Id"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil-square"></i> Update
+                            </a>
+                            <form asp-controller="Student"
+                                  asp-action="Delete"
+                                  asp-route-id="@student.Id"
+                                  method="post"
+                                  class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
