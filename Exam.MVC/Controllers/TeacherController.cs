@@ -1,4 +1,5 @@
-﻿using Exam.Application.Features.Teacher.CreateTeacher;
+﻿using AutoMapper;
+using Exam.Application.Features.Teacher.CreateTeacher;
 using Exam.Application.Features.Teacher.GetAllTeacher;
 using Exam.Application.Features.Teacher.GetTeacher;
 using Exam.Application.Features.Teacher.RemoveTeacher;
@@ -8,9 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exam.MVC.Controllers
 {
-    public class TeacherController(ISender sender) : Controller
+    public class TeacherController(ISender sender, IMapper mapper) : Controller
     {
         private readonly ISender _sender = sender;
+        private readonly IMapper _mapper = mapper;
         public static string ControllerName => nameof(TeacherController);
 
         public async Task<IActionResult> Index()
@@ -54,7 +56,8 @@ namespace Exam.MVC.Controllers
         public async Task<IActionResult> Update(Guid teacherId)
         {
             var teacher = await _sender.Send(new GetTeacherQuery(teacherId));
-            return View(new CreateTeacherViewModel());
+            UpdateTeacherViewModel teacherViewModel = _mapper.Map<UpdateTeacherViewModel>(teacher.Value);
+            return View(teacherViewModel);
         }
     }
-}
+}   

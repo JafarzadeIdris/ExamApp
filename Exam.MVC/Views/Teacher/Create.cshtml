@@ -1,21 +1,36 @@
 ﻿@using Exam.MVC.Models.Teacher
 @model CreateTeacherViewModel
 
-<div class="card">
-    <div class="card-body">
-        <form asp-action="Create"method="post">
-            <div class="mb-6">
-                <label asp-for="FirstName" class="form-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+@{
+    ViewData["Title"] = "Create Teacher";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Create Teacher</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div class="mb-3">
+                            <span class="text-danger">*</span>
+                            <label asp-for="FirstName" class="form-label"></label>
+                            <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <span class="text-danger">*</span>
+                            <label asp-for="LastName" class="form-label"></label>
+                            <input asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">
+                            <i class="bi bi-plus-circle-fill"></i> Create
+                        </button>
+                    </form>
+                </div>
             </div>
-            <div class="mb-6">
-                <label asp-for="LastName" class="form-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-         
-            <button type="submit" class="btn btn-primary">Create</button>
-        </form>
+        </div>
     </div>
 </div>

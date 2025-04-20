@@ -20,3 +20,77 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+<style >
+.sidebar {
+    height: 100vh;
+    background-color: #f8f9fa;
+    padding-top: 20px;
+    position: fixed;
+    width: 220px;
+}
+
+.sidebar .list-group-item {
+    border: none;
+    border-radius: 0;
+    padding: 15px 20px;
+    font-weight: 500;
+    color: #333;
+}
+
+    .sidebar .list-group-item:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .sidebar .list-group-item.active {
+        background-color: #007bff;
+        color: white;
+    }
+
+.main-content {
+    margin-left: 220px;
+    padding: 30px;
+}
+.sidebar {
+    height: 100vh;
+    background-color: #ffffff;
+    padding-top: 20px;
+    position: fixed;
+    width: 240px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #e0e0e0;
+}
+
+    .sidebar .list-group-item {
+        border: none;
+        border-radius: 0;
+        padding: 15px 20px;
+        font-weight: 500;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+        .sidebar .list-group-item:hover {
+            background-color: #f0f0f0;
+            color: #007bff;
+        }
+
+        .sidebar .list-group-item.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .sidebar .list-group-item i {
+            font-size: 18px;
+        }
+
+.main-content {
+    margin-left: 240px;
+    padding: 40px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
