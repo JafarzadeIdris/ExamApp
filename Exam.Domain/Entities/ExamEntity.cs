@@ -27,8 +27,8 @@ namespace Exam.Domain.Entities
             if (date == default)
                 throw new ArgumentException("Exam date must be a valid date.", nameof(date));
 
-            if (date > DateTime.UtcNow.AddDays(1))
-                throw new ArgumentException("Exam date cannot be in the far future.", nameof(date));
+            if (date.Date < DateTime.UtcNow.Date)
+                throw new ArgumentException("Exam date cannot be in the past.", nameof(date));
 
             ExamDate = date;
         }

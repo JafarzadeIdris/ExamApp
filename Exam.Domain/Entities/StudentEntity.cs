@@ -1,5 +1,6 @@
 ﻿using Exam.Domain.Entities;
 using Exam.Domain.Entities.Common;
+using System.Xml.Linq;
 
 public class StudentEntity : BaseEntity
 {
@@ -20,8 +21,8 @@ public class StudentEntity : BaseEntity
 
     public void SetNumber(int number)
     {
-        if (number <= 0)
-            throw new ArgumentOutOfRangeException(nameof(number), "Student number must be greater than 0.");
+        if (number < 1 || number > 99999)
+            throw new ArgumentOutOfRangeException(nameof(number), "Student number must be between 1 and 99999.");
 
         Number = number;
     }
@@ -30,6 +31,8 @@ public class StudentEntity : BaseEntity
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Student name cannot be empty.", nameof(name));
+        if (name.Length > 20)
+            throw new ArgumentException("Student name cannot be longer than 20 characters.", nameof(name));
 
         Name = name;
     }
@@ -38,6 +41,8 @@ public class StudentEntity : BaseEntity
     {
         if (string.IsNullOrWhiteSpace(surname))
             throw new ArgumentException("Student surname cannot be empty.", nameof(surname));
+        if (surname.Length > 20)
+            throw new ArgumentException("Student name cannot be longer than 20 characters.", nameof(surname));
 
         Surname = surname;
     }
@@ -48,7 +53,7 @@ public class StudentEntity : BaseEntity
             throw new ArgumentOutOfRangeException(nameof(classLevel), "Class level must be between 1 and 11.");
 
         ClassLevel = classLevel;
-    }
+    }   
 
     public void AddExam(ExamEntity exam)
     {

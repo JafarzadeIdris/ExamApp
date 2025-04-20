@@ -7,15 +7,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5ADE17E4-D4B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A0CA5028-4463-4494-B1E2-F94B3DA36FD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.MVC", "Exam.MVC\Exam.MVC.csproj", "{5A6A4E8B-A9F9-4339-B598-47E8B25FA632}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.MVC", "Exam.MVC\Exam.MVC.csproj", "{5A6A4E8B-A9F9-4339-B598-47E8B25FA632}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.Application", "Exam.Application\Exam.Application.csproj", "{D74700F1-2E7A-4931-A067-9F43A9FF1029}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.Application", "Exam.Application\Exam.Application.csproj", "{D74700F1-2E7A-4931-A067-9F43A9FF1029}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.Domain", "Exam.Domain\Exam.Domain.csproj", "{C8C7E4DE-3428-40CC-AD71-18B52AE655CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.Domain", "Exam.Domain\Exam.Domain.csproj", "{C8C7E4DE-3428-40CC-AD71-18B52AE655CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.Persistence", "Exam.Persistence\Exam.Persistence.csproj", "{1071EB46-1BF3-4B07-8B6B-9FBAEFAA1311}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.Persistence", "Exam.Persistence\Exam.Persistence.csproj", "{1071EB46-1BF3-4B07-8B6B-9FBAEFAA1311}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exam.Infrastructure", "Exam.Infrastructure\Exam.Infrastructure.csproj", "{26C0D6F1-640F-4A4B-B79D-022FB1F0972D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exam.Infrastructure", "Exam.Infrastructure\Exam.Infrastructure.csproj", "{26C0D6F1-640F-4A4B-B79D-022FB1F0972D}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{059360E4-3605-49BC-AC00-1F491DF6E4E6}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4F0D7FEA-8DBF-4B05-80D7-004DF40E8A47}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{348FE263-6706-4218-B21E-9B52AEBE946A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamApp.Tests.Unit", "..\ExamApp.Tests.Unit\ExamApp.Tests.Unit.csproj", "{6DC4C8EF-C534-4F1B-A7F3-0EB7B87DE1CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{059360E4-3605-49BC-AC00-1F491DF6E4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{059360E4-3605-49BC-AC00-1F491DF6E4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{059360E4-3605-49BC-AC00-1F491DF6E4E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DC4C8EF-C534-4F1B-A7F3-0EB7B87DE1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DC4C8EF-C534-4F1B-A7F3-0EB7B87DE1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DC4C8EF-C534-4F1B-A7F3-0EB7B87DE1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DC4C8EF-C534-4F1B-A7F3-0EB7B87DE1CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{1CF7FEE7-D40D-446F-A2AA-CD488EFBE9E4} = {5ADE17E4-D4BF-49E4-A530-72B98B10316D}
 		{4F0D7FEA-8DBF-4B05-80D7-004DF40E8A47} = {5ADE17E4-D4BF-49E4-A530-72B98B10316D}
 		{348FE263-6706-4218-B21E-9B52AEBE946A} = {5ADE17E4-D4BF-49E4-A530-72B98B10316D}
+		{6DC4C8EF-C534-4F1B-A7F3-0EB7B87DE1CE} = {A0CA5028-4463-4494-B1E2-F94B3DA36FD2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5149AE97-3DA8-4713-911D-D148423ED189}
