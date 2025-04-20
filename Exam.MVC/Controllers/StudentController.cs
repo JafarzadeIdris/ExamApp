@@ -15,9 +15,9 @@ namespace Exam.MVC.Controllers
         private readonly ISender _sender = sender;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
-            var allStudent = await _sender.Send(new GetAllStudentQuery());
+            var allStudent = await _sender.Send(new GetAllStudentQuery(), cancellationToken);
             return View(allStudent.Value);
         }
         [HttpGet]
@@ -27,11 +27,11 @@ namespace Exam.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateStudentViewModel model)
+        public async Task<IActionResult> Create(CreateStudentViewModel model, CancellationToken cancellationToken)
         {
             if (ModelState.IsValid)
             {
-                var response = await _sender.Send(_mapper.Map<CreateStudentCommand>(model));
+                var response = await _sender.Send(_mapper.Map<CreateStudentCommand>(model),cancellationToken);
                 if (response.IsSuccess)
                     return RedirectToAction(nameof(Index));
                 else
@@ -43,9 +43,9 @@ namespace Exam.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Student/Delete/{id}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
         {
-            var deletedStudent = await _sender.Send(new RemoveStudentCommand(id));
+            var deletedStudent = await _sender.Send(new RemoveStudentCommand(id),cancellationToken);
             if (deletedStudent.IsSuccess)
                 return RedirectToAction(nameof(Index));
             else
@@ -53,9 +53,9 @@ namespace Exam.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Update(Guid studentId)
+        public async Task<IActionResult> Update(Guid studentId, CancellationToken cancellationToken)
         {
-            var student = await _sender.Send(new GetStudentQuery(studentId));
+            var student = await _sender.Send(new GetStudentQuery(studentId),cancellationToken);
             UpdateStudentViewModel studentViewModel = _mapper.Map<UpdateStudentViewModel>(student.Value);
             return View(studentViewModel);
         }
@@ -64,11 +64,11 @@ namespace Exam.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Student/Update")]
-        public async Task<IActionResult> Update(UpdateStudentViewModel model)
+        public async Task<IActionResult> Update(UpdateStudentViewModel model, CancellationToken cancellationToken)
         {
             if (ModelState.IsValid)
             {
-                var response = await _sender.Send(_mapper.Map<UpdateStudentCommand>(model));
+                var response = await _sender.Send(_mapper.Map<UpdateStudentCommand>(model),cancellationToken);
                 if (response.IsSuccess)
                     return RedirectToAction(nameof(Index));
                 else

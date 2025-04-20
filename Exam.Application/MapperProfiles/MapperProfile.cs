@@ -14,9 +14,12 @@ namespace Exam.Application.MapperProfiles
             CreateMap<CreateTeacherCommand, TeacherEntity>();
             CreateMap<UpdateTeacherCommand, TeacherEntity>();
             CreateMap<TeacherEntity, TeacherDto>();
-            CreateMap<CreateStudentCommand, StudentEntity>();
+            //CreateMap<CreateStudentCommand, StudentEntity>();
             CreateMap<UpdateStudentCommand, StudentEntity>();
             CreateMap<StudentEntity, StudentDto>();
+            CreateMap<CreateStudentCommand, StudentEntity>()
+    .ConstructUsing(src => new StudentEntity(src.Number, src.Name, src.Surname, src.ClassLevel));
+
         }
     }
 }
