@@ -14,5 +14,6 @@ namespace Exam.Persistence.Contexts
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ExamDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
+        
     }
 }

@@ -4,10 +4,11 @@ using MediatR;
 
 namespace Exam.Application.Abstractions.Queries
 {
-    public interface IRequestBase { }
-    public interface IQuery<TResponse> : IRequest<Result<TResponse>>
+    public interface IListQuery<TResponse> : IRequest<Result<List<TResponse>>>
         where TResponse : notnull
     { }
-    public interface IQuery :  IRequest<Result>
+    public interface ISingleQuery<TResponse> : IRequest<Result<TResponse>>
+        where TResponse : notnull
     { }
+
 }

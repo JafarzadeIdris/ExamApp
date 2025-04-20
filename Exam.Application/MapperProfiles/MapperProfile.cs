@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
-using Exam.Application.Features.Teacher;
+using Exam.Application.Dtos.Teacher;
+using Exam.Application.Features.Teacher.CreateTeacher;
 using Exam.Domain.Entities;
 
 namespace Exam.Application.MapperProfiles
 {
-    public class MapperProfile: Profile
+    public class MapperProfile : Profile
     {
         public MapperProfile()
         {
-            CreateMap<TeacherEntity, CreateTeacherCommand>().ReverseMap();
+            CreateMap<CreateTeacherCommand, TeacherEntity>();
+            CreateMap<TeacherEntity, TeacherDto>();
         }
     }
 }

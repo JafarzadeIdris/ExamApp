@@ -1,12 +1,8 @@
-﻿using AutoMapper;
-using CSharpFunctionalExtensions;
-using Exam.Application.Abstractions.Commands;
+﻿using Exam.Application.Abstractions.Commands;
 using Exam.Application.Abstractions.Error;
-using Exam.Application.Abstractions.Repository;
-using Exam.Domain.Entities;
 using MediatR;
 
-namespace Exam.Application.Features.Teacher
+namespace Exam.Application.Features.Teacher.CreateTeacher
 {
     public class CreateTeacherCommandHandler(IRepository<TeacherEntity> repository, IMapper mapper) : ICommandHandler<CreateTeacherCommand, Unit>
     {

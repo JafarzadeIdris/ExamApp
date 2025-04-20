@@ -22,7 +22,6 @@ Log.Logger = SerilogConfiguration.ConfigureSerilog(builder.Configuration, enviro
 builder.Host.UseSerilog();
 
 
-
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -30,7 +29,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
-
+app.ApplyMigrations();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
