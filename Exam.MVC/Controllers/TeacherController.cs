@@ -3,6 +3,7 @@ using Exam.Application.Features.Teacher.CreateTeacher;
 using Exam.Application.Features.Teacher.GetAllTeacher;
 using Exam.Application.Features.Teacher.GetTeacher;
 using Exam.Application.Features.Teacher.RemoveTeacher;
+using Exam.Application.Features.Teacher.UpdateTeacher;
 using Exam.MVC.Models.Teacher;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,6 @@ namespace Exam.MVC.Controllers
     {
         private readonly ISender _sender = sender;
         private readonly IMapper _mapper = mapper;
-        public static string ControllerName => nameof(TeacherController);
 
         public async Task<IActionResult> Index()
         {
@@ -31,7 +31,7 @@ namespace Exam.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await _sender.Send(new CreateTeacherCommand(model.Id, model.FirstName, model.LastName));
+                var response = await _sender.Send(_mapper.Map<CreateTeacherCommand>(model));
                 if (response.IsSuccess)
                     return RedirectToAction(nameof(Index));
                 else
@@ -43,13 +43,13 @@ namespace Exam.MVC.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Route("Teacher/Delete/{id}")]
-        public async Task<IActionResult> Delete(Guid teacherId)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var deletedTeacher = await _sender.Send(new RemoveTeacherCommand(teacherId));
+            var deletedTeacher = await _sender.Send(new RemoveTeacherCommand(id));
             if (deletedTeacher.IsSuccess)
                 return RedirectToAction(nameof(Index));
             else
-                return BadRequest(deletedTeacher.Error.ToString());
+                return BadRequest(deletedTeacher.Error);
         }
 
         [HttpGet]
@@ -59,5 +59,22 @@ namespace Exam.MVC.Controllers
             UpdateTeacherViewModel teacherViewModel = _mapper.Map<UpdateTeacherViewModel>(teacher.Value);
             return View(teacherViewModel);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Teacher/Update")]
+        public async Task<IActionResult> Update(UpdateTeacherViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = await _sender.Send(_mapper.Map<UpdateTeacherCommand>(model));
+                if (response.IsSuccess)
+                    return RedirectToAction(nameof(Index));
+                else
+                    return BadRequest(response.Error);
+            }
+            return View(model);
+        }
     }
-}   
+}

@@ -16,14 +16,15 @@ namespace Exam.Persistence.Repositories
 
         public async Task AddAsync(TEntity entity, CancellationToken cancellationToken)
         {
-
             await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            await _context.Set<TEntity>().Where(x => x.Id == id).ExecuteDeleteAsync(cancellationToken);
+            var entity = await _context.FindAsync<TEntity>(id, cancellationToken);
+            if (entity is null)
+                throw new ArgumentNullException(nameof(id), "Entity not found");
+             _context.Set<TEntity>().Remove(entity);
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? method, CancellationToken cancellationToken)
@@ -35,7 +36,7 @@ namespace Exam.Persistence.Repositories
 
         public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> method, CancellationToken cancellationToken)
         {
-           return await _context.Set<TEntity>().FirstOrDefaultAsync(method, cancellationToken);
+            return await _context.Set<TEntity>().FirstOrDefaultAsync(method, cancellationToken);
         }
 
         public async Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
@@ -43,12 +44,10 @@ namespace Exam.Persistence.Repositories
             return await _context.FindAsync<TEntity>(id, cancellationToken);
         }
 
-        public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+        public void Update(TEntity entity)
         {
             entity.UpdatedDate = DateTime.UtcNow;
-            _context.Update(entity);
-            await _context.SaveChangesAsync(cancellationToken);
+            _context.Set<TEntity>().Update(entity);
         }
-
     }
 }

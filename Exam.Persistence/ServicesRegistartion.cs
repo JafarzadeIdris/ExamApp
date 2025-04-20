@@ -34,6 +34,7 @@ namespace Exam.Persistence
         public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddDbContext<ExamDbContext>(options =>
                  options.UseSqlServer( configuration.GetConnectionString("DefaultConnection") ));

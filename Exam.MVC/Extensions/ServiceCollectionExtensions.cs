@@ -1,4 +1,5 @@
-﻿using Exam.MVC.Models;
+﻿using Exam.MVC.Middlewares;
+using Exam.MVC.Models;
 
 namespace Exam.MVC.Extensions
 {
@@ -8,6 +9,7 @@ namespace Exam.MVC.Extensions
         {
             services.AddControllersWithViews();
             services.AddAutoMapper(cfg => cfg.AddProfile<MapperProfile>());
+            services.AddExceptionHandler<CustomExceptionHandler>();
             return services;
         }
     }

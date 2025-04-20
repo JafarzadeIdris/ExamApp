@@ -12,7 +12,6 @@ namespace Exam.Application
             services.AddMediatR(config =>
             {
                 config.RegisterServicesFromAssembly(typeof(ServicesRegistration).Assembly);
-                config.AddOpenBehavior(typeof(ExceptionHandlingPipelineBehavior<,>));
                 config.AddOpenBehavior(typeof(LoggingPipelineBehavior<,>));
             });
             return services;

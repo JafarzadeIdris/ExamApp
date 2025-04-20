@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Exam.Application.Features.Teacher.CreateTeacher
 {
-    public record CreateTeacherCommand(Guid Id, string FirstName, string LastName) : ICommand<Unit>
+    public record CreateTeacherCommand(string FirstName, string LastName) : ICommand<Unit>
     {
     }
 }

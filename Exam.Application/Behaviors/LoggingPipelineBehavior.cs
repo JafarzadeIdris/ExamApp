@@ -1,10 +1,6 @@
-﻿using MediatR;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using static CSharpFunctionalExtensions.Result;
-
-
 
 namespace Exam.Application.Behaviors
 {

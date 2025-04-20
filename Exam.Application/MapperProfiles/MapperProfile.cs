@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using Exam.Application.Dtos.Teacher;
+﻿using Exam.Application.Dtos.Teacher;
 using Exam.Application.Features.Teacher.CreateTeacher;
-using Exam.Domain.Entities;
+using Exam.Application.Features.Teacher.UpdateTeacher;
 
 namespace Exam.Application.MapperProfiles
 {
@@ -10,6 +9,7 @@ namespace Exam.Application.MapperProfiles
         public MapperProfile()
         {
             CreateMap<CreateTeacherCommand, TeacherEntity>();
+            CreateMap<UpdateTeacherCommand, TeacherEntity>();
             CreateMap<TeacherEntity, TeacherDto>();
         }
     }
