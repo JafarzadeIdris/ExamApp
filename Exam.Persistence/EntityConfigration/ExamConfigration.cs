@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore;
 using Exam.Domain.Entities;
 
 namespace Exam.Persistence.EntityConfigration

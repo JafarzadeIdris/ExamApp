@@ -1,6 +1,8 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using static CSharpFunctionalExtensions.Result;
 
 
 
@@ -11,23 +13,27 @@ namespace Exam.Application.Behaviors
      where TResponse : notnull
     {
         private readonly ILogger<LoggingPipelineBehavior<TRequest, TResponse>> _logger;
-
-        public LoggingPipelineBehavior(ILogger<LoggingPipelineBehavior<TRequest, TResponse>> logger)
+        private readonly IConfiguration _configuration;
+        public LoggingPipelineBehavior(ILogger<LoggingPipelineBehavior<TRequest, TResponse>> logger, IConfiguration configuration)
         {
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _logger = logger ;
+            _configuration = configuration;
         }
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Handling process started for {request}");
-            var metric = Stopwatch.StartNew();
-            var response = await next();
-            metric.Stop();
+            var stopwatch = Stopwatch.StartNew();
+            var response = await next(cancellationToken);
+            stopwatch.Stop();
 
-            if (metric.Elapsed.Seconds > 5)
-                _logger.LogWarning($"Handling process took too much time. Maybe it needs to be refactored: {metric.Elapsed}");
-
-            _logger.LogInformation($"Handling process done for {request} and you have response {response}");
+            var elapsedTime = stopwatch.Elapsed.TotalSeconds;
+            _logger.LogInformation(
+                "Handling process for {Request} completed in {ElapsedTime}s. Response: {Response}",
+                request,
+                elapsedTime,
+                response
+            );
             return response;
         }
     }

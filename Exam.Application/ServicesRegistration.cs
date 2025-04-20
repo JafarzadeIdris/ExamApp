@@ -15,7 +15,6 @@ namespace Exam.Application
                 config.AddOpenBehavior(typeof(ExceptionHandlingPipelineBehavior<,>));
                 config.AddOpenBehavior(typeof(LoggingPipelineBehavior<,>));
             });
-            //services.AddAutoMapper(typeof(MapperProfile).Assembly);
             return services;
         }
     }

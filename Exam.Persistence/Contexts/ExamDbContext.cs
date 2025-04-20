@@ -1,5 +1,4 @@
 ﻿using Exam.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Exam.Persistence.Contexts
 {
@@ -14,6 +13,5 @@ namespace Exam.Persistence.Contexts
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ExamDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
-        
     }
 }

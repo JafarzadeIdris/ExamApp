@@ -1,9 +1,7 @@
-﻿using CSharpFunctionalExtensions;
-using Exam.Application.Abstractions.Error;
+﻿using Exam.Application.Abstractions.Error;
 using Exam.Application.Errors;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System.ComponentModel.DataAnnotations;
 
 namespace Exam.Application.Behaviors
 {
@@ -16,7 +14,7 @@ namespace Exam.Application.Behaviors
         {
             try
             {
-                return await next();
+                return await next(cancellationToken);
             }
             catch (Exception exception)
             {
