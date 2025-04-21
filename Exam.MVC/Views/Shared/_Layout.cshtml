@@ -17,7 +17,10 @@
             <!-- Sidebar -->
             <div class="col-3 sidebar">
                 <div class="list-group">
-                    <a asp-controller="Teacher" asp-action="Index" class="list-group-item list-group-item-action active">
+                    <a asp-controller="Exam" asp-action="Index" class="list-group-item list-group-item-action active">
+                        <i class="bi bi-clipboard-check-fill"></i> Exam
+                    </a>
+                    <a asp-controller="Teacher" asp-action="Index" class="list-group-item list-group-item-action ">
                         <i class="bi bi-person-badge-fill"></i> Teacher
                     </a>
                     <a asp-controller="Student" asp-action="Index" class="list-group-item list-group-item-action">
@@ -25,9 +28,6 @@
                     </a>
                     <a asp-controller="Lesson" asp-action="Index" class="list-group-item list-group-item-action">
                         <i class="bi bi-journal-bookmark-fill"></i> Lesson
-                        </a>
-                    <a asp-controller="Exam" asp-action="Index" class="list-group-item list-group-item-action">
-                        <i class="bi bi-clipboard-check-fill"></i> Exam
                     </a>
                 </div>
             </div>

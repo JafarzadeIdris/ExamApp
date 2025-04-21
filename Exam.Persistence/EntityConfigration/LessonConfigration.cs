@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Exam.Persistence.EntityConfigration
 {
-    public class LessenConfigration: IEntityTypeConfiguration<LessonEntity>
+    public class LessonConfigration: IEntityTypeConfiguration<LessonEntity>
     {
         public void Configure(EntityTypeBuilder<LessonEntity> builder)
         {
@@ -30,7 +30,7 @@ namespace Exam.Persistence.EntityConfigration
 
             builder.HasMany(s => s.Exams)
                   .WithOne(e => e.Lesson)
-                  .HasForeignKey(e => e.Id)
+                  .HasForeignKey(e => e.LessonId)
                   .OnDelete(DeleteBehavior.Cascade);
         }
     }

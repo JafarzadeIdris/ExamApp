@@ -2,6 +2,7 @@
 using Exam.Application.Abstractions.Repository;
 using Exam.Persistence.Contexts;
 using Exam.Persistence.Repositories;
+using Exam.Persistence.Seed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,20 +25,26 @@ namespace Exam.Persistence
 
                 var logger = services.GetRequiredService<ILogger<ExamDbContext>>();
                 logger.LogInformation("✅ Database migrations applied successfully.");
+
+                
+                DatabaseInitializer.SeedAsync(context, logger).GetAwaiter().GetResult();
+
             }
             catch (Exception exception)
             {
                 var logger = services.GetRequiredService<ILogger<ExamDbContext>>();
                 logger.LogError(exception, "❌ An error occurred while applying migrations.");
+                throw new Exception(exception.Message);
             }
         }
         public static IServiceCollection AddPersistenceLayer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IExamRepository, ExamRepository>();
 
             services.AddDbContext<ExamDbContext>(options =>
-                 options.UseSqlServer( configuration.GetConnectionString("DefaultConnection") ));
+                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddApplicationLayer();
             return services;
         }

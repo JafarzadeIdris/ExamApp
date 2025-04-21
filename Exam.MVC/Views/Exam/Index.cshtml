@@ -1,0 +1,111 @@
+﻿@using Exam.Application.Common
+@using Exam.Application.Dtos.Exam
+@model PaginateResponse<ExamDto>
+
+@{
+    ViewData["Title"] = "Exam Page";
+    var pageSize = Context.Request.Query["pageSize"];
+}
+
+<div class="container">
+    <div class="row card shadow-sm mt-4 p-4">
+        <h1 class="text-center mb-4">Exam List</h1>
+        <div class="container">
+            <div class="row justify-content-end">
+                <a asp-controller="Exam" asp-action="Create" class="btn btn-success mb-3">
+                    <i class="bi bi-plus-circle"></i> Create New Exam
+                </a>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped table-hover">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Lesson Code</th>
+                    <th>Student Number</th>
+                    <th>Student Name</th>
+                    <th>Exam Date</th>
+                    <th>Score</th>
+                    <th style="width: 180px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var exam in Model.Data)
+                {
+                    <tr class="text-center">
+                        <td>@exam.Lesson.Code</td>
+                        <td>@exam.Student.Number</td>
+                        <td>@exam.Student.Name</td>
+                        <td>@exam.ExamDate.ToString("dd.MM.yyyy")</td>
+                        <td>@exam.Score</td>
+                        <td class="d-flex justify-content-center gap-2">
+                            <a asp-controller="Exam"
+                               asp-action="Update"
+                               asp-route-examId="@exam.Id"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil-square"></i> Update
+                            </a>
+                            <form asp-controller="Exam"
+                                  asp-action="Delete"
+                                  asp-route-id="@exam.Id"
+                                  method="post"
+                                  class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="row justify-content-between align-items-center mt-3">
+            <div class="col-auto">
+                <form method="get" asp-controller="Exam" asp-action="Index" class="d-flex align-items-center">
+                    <label for="pageSize" class="me-2 mb-0">Page Size:</label>
+                    <select name="pageSize" id="pageSize" class="form-select form-select-sm" onchange="this.form.submit()">
+                        <option value="5" selected="@(pageSize == "5" ? "selected" : null)">5</option>
+                        <option value="10" selected="@(pageSize == "10" || String.IsNullOrEmpty(pageSize) ? "selected" : null)">10</option>
+                        <option value="50" selected="@(pageSize == "50" ? "selected" : null)">50</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="col">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-end mb-0">
+                        @if (Model.HasPrevious)
+                        {
+                            <li class="page-item">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-pageNumber="@(Model.PageNumber - 1)"
+                                   asp-route-pageSize="@pageSize">Previous</a>
+                            </li>
+                        }
+
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-pageNumber="@i"
+                                   asp-route-pageSize="@pageSize">@i</a>
+                            </li>
+                        }
+
+                        @if (Model.HasNext)
+                        {
+                            <li class="page-item">
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-pageNumber="@(Model.PageNumber + 1)"
+                                   asp-route-pageSize="@pageSize">Next</a>
+                            </li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>

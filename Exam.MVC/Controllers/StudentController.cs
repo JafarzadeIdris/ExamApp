@@ -4,6 +4,7 @@ using Exam.Application.Features.Student.GetAllStudent;
 using Exam.Application.Features.Student.GetStudent;
 using Exam.Application.Features.Student.RemoveStudent;
 using Exam.Application.Features.Student.UpdateStudent;
+using Exam.Application.Features.Teacher.GetAllTeacher;
 using Exam.MVC.Models.Student;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +16,16 @@ namespace Exam.MVC.Controllers
         private readonly ISender _sender = sender;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<IActionResult> Index(CancellationToken cancellationToken)
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default)
         {
-            var allStudent = await _sender.Send(new GetAllStudentQuery(), cancellationToken);
-            return View(allStudent.Value);
+            var result = await _sender.Send(new GetAllStudentQuery
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            }, cancellationToken);
+            return View(result.Value);
         }
+
         [HttpGet]
         public IActionResult Create()
         {

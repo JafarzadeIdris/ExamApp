@@ -1,7 +1,13 @@
-﻿using Exam.Application.Abstractions.Repository;
+﻿using Azure.Core;
+using Exam.Application.Abstractions.Repository;
 using Exam.Domain.Entities.Common;
 using Exam.Persistence.Contexts;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Threading;
+using MediatR;
+using Exam.Application.Common;
+using Exam.Application.Dtos.Student;
 
 namespace Exam.Persistence.Repositories
 {
@@ -24,7 +30,7 @@ namespace Exam.Persistence.Repositories
             var entity = await _context.FindAsync<TEntity>(id, cancellationToken);
             if (entity is null)
                 throw new ArgumentNullException(nameof(id), "Entity not found");
-             _context.Set<TEntity>().Remove(entity);
+            _context.Set<TEntity>().Remove(entity);
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>>? method, CancellationToken cancellationToken)
@@ -48,6 +54,24 @@ namespace Exam.Persistence.Repositories
         {
             entity.UpdatedDate = DateTime.UtcNow;
             _context.Set<TEntity>().Update(entity);
+        }
+        public async Task<PaginateResponse<TEntity>> GetPaginationAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
+        {
+            var query =  _context.Set<TEntity>().AsNoTracking();
+
+            var totalCount = await query.CountAsync(cancellationToken);
+
+            var entity = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
+
+            var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+            return new PaginateResponse<TEntity>
+            {
+                Data = entity,
+                PageNumber = pageNumber,
+                TotalPages = totalPages,
+                TotalCount = totalCount
+            };
         }
     }
 }

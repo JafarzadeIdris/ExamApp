@@ -16,6 +16,7 @@ namespace Exam.MVC.Middlewares
 
         public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
         {
+            
             _logger.LogError(exception, "Unhandled exception occurred at {Path}", httpContext.Request.Path);
 
             httpContext.Response.ContentType = MediaTypeNames.Application.Json;
@@ -42,7 +43,7 @@ namespace Exam.MVC.Middlewares
             var response = new
             {
                 title = title,
-                status = 500,
+                status = httpContext.Response.StatusCode,
                 detail = exception.Message,
                 traceId = httpContext.TraceIdentifier
             };

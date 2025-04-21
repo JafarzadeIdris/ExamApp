@@ -1,6 +1,4 @@
-﻿using CSharpFunctionalExtensions;
-using Exam.Application.Abstractions.Error;
-using MediatR;
+﻿using Exam.Application.Common;
 
 namespace Exam.Application.Abstractions.Queries
 {
@@ -9,7 +7,7 @@ namespace Exam.Application.Abstractions.Queries
     where TResponse : notnull
     { }
 
-    public interface IListQueryHandler<TRequest, TResponse>: IRequestHandler<TRequest, Result<List<TResponse>>>
+    public interface IListQueryHandler<TRequest, TResponse>: IRequestHandler<TRequest, Result<PaginateResponse<TResponse>>>
         where TRequest : IListQuery<TResponse>
         where TResponse : notnull
     { }

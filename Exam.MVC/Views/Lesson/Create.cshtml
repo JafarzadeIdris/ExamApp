@@ -1,0 +1,62 @@
+﻿@using Exam.MVC.Models.Lesson
+@model CreateLessonViewModel
+
+@{
+    ViewData["Title"] = "Create Lesson";
+}
+<div class="card shadow-sm mt-4 p-4">
+    <div class="card-body">
+        <h2 class="text-center mb-4">Create Lesson</h2>
+        <form asp-action="Create" method="post">
+
+            <div class="mb-3">
+                <label asp-for="Code" class="form-label">
+                    <span class="text-danger">*</span> Code
+                </label>
+                <input asp-for="Code" class="form-control" placeholder="Code" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">
+                    <span class="text-danger">*</span> Lesson Name
+                </label>
+                <input asp-for="Name" class="form-control" placeholder="Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ClassLevel" class="form-label">
+                    <span class="text-danger">*</span> Class Level
+                </label>
+                <input asp-for="ClassLevel" class="form-control" placeholder="1 - 11" />
+                <span asp-validation-for="ClassLevel" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="TeacherId" class="form-label">Teacher</label>
+                <select asp-for="TeacherId" asp-items="Model.Teachers" class="form-select">
+                    <option value="">-- Select a Teacher --</option>
+                </select>
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
+            </div>
+
+            <!-- Submit and Cancel -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success btn-lg">
+                    <i class="bi bi-check-circle-fill"></i> Create
+                </button>
+                <a asp-action="Index" class="btn btn-secondary btn-lg">
+                    <i class="bi bi-x-circle-fill"></i> Cancel
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

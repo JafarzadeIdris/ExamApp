@@ -1,4 +1,5 @@
 ﻿
+using Exam.Application.Common;
 using Exam.Domain.Entities.Common;
 using System.Linq.Expressions;
 
@@ -12,5 +13,6 @@ namespace Exam.Application.Abstractions.Repository
         void Update(TEntity entity);
         Task DeleteAsync(Guid id, CancellationToken cancellationToken);
         Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> method, CancellationToken cancellationToken);
+        Task<PaginateResponse<TEntity>> GetPaginationAsync(int pageNumber, int pageSize, CancellationToken cancellationToken);
     }
 }

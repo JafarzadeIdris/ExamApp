@@ -8,7 +8,7 @@ namespace Exam.Application.Abstractions.Error
 {
     public interface IDomainError
     {
-        string ErrorMessage { get; set; }
-        public List<string>? Errors { get; set; }
+        public string? Message { get; set; }
+        public List<string>? ValidationErrors { get; set; }
     }
 }

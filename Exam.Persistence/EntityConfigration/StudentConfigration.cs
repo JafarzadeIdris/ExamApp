@@ -25,7 +25,7 @@ namespace Exam.Persistence.EntityConfigration
 
             builder.HasMany(st => st.Exams)
                   .WithOne(e => e.Student)
-                  .HasForeignKey(e => e.Id)
+                  .HasForeignKey(e => e.StudentId)
                   .OnDelete(DeleteBehavior.Cascade);
         }
     }

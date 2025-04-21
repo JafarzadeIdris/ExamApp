@@ -1,27 +1,23 @@
 ﻿using CSharpFunctionalExtensions;
 using Exam.Application.Abstractions.Commands;
 using Exam.Application.Abstractions.Error;
-using Exam.Application.Abstractions.Repository;
-using Exam.Domain.Entities;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Exam.Application.Features.Exam.CreateExam
 {
-    //public class CreateExamCommandHandler : ICommandHandler<CreateExamCommand, Unit>
-    //{
-    //    private readonly IRepository<ExamEntity> _repository;
-    //    private readonly IServiceScopeFactory _scopeFactory;
+    public class CreateExamCommandHandler(IRepository<ExamEntity> repository, IMapper mapper, IUnitOfWork unitOfWork) : ICommandHandler<CreateExamCommand, Unit>
+    {
+        private readonly IRepository<ExamEntity> _repository = repository;
+        private readonly IMapper _mapper = mapper;
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
-    //    public CreateExamCommandHandler(IRepository<ExamEntity> repository, IServiceScopeFactory scopeFactory)
-    //    {
-    //        _repository = repository;
-    //        _scopeFactory = scopeFactory;
-    //    }
+        public async Task<Result<Unit, IDomainError>> Handle(CreateExamCommand request, CancellationToken cancellationToken)
+        {
 
-    //    public Task<Result<Unit, IDomainError>> Handle(CreateExamCommand request, CancellationToken cancellationToken)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
+            ExamEntity entity = _mapper.Map<ExamEntity>(request);
+            await _repository.AddAsync(entity, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            return Result.Success<Unit, IDomainError>(Unit.Value);
+        }
+    }
 }

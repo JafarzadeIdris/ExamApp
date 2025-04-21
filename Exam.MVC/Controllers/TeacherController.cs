@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Exam.Application.Features.Student.GetAllStudent;
 using Exam.Application.Features.Teacher.CreateTeacher;
 using Exam.Application.Features.Teacher.GetAllTeacher;
 using Exam.Application.Features.Teacher.GetTeacher;
@@ -15,11 +16,18 @@ namespace Exam.MVC.Controllers
         private readonly ISender _sender = sender;
         private readonly IMapper _mapper = mapper;
 
-        public async Task<IActionResult> Index(CancellationToken cancellationToken)
+     
+        public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10, CancellationToken cancellationToken = default)
         {
-            var allTeacher = await _sender.Send(new GetAllTeacherQuery(),cancellationToken);
-            return View(allTeacher.Value);
+            var result = await _sender.Send(new GetAllTeacherQuery
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize
+            }, cancellationToken);
+            return View(result.Value);
         }
+
+
         [HttpGet]
         public IActionResult Create()
         {

@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exam.Persistence.Migrations
 {
     [DbContext(typeof(ExamDbContext))]
-    [Migration("20250419211608_second")]
-    partial class second
+    [Migration("20250421022853_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.15")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -28,6 +28,7 @@ namespace Exam.Persistence.Migrations
             modelBuilder.Entity("Exam.Domain.Entities.ExamEntity", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -50,10 +51,14 @@ namespace Exam.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("StudentId");
+
                     b.ToTable("Exams");
                 });
 
-            modelBuilder.Entity("Exam.Domain.Entities.LessonEntity", b =>
+            modelBuilder.Entity("LessonEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -87,7 +92,7 @@ namespace Exam.Persistence.Migrations
                     b.ToTable("Lessons");
                 });
 
-            modelBuilder.Entity("Exam.Domain.Entities.StudentEntity", b =>
+            modelBuilder.Entity("StudentEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,7 +125,7 @@ namespace Exam.Persistence.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("Exam.Domain.Entities.TeacherEntity", b =>
+            modelBuilder.Entity("TeacherEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -149,15 +154,15 @@ namespace Exam.Persistence.Migrations
 
             modelBuilder.Entity("Exam.Domain.Entities.ExamEntity", b =>
                 {
-                    b.HasOne("Exam.Domain.Entities.LessonEntity", "Lesson")
+                    b.HasOne("LessonEntity", "Lesson")
                         .WithMany("Exams")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Exam.Domain.Entities.StudentEntity", "Student")
+                    b.HasOne("StudentEntity", "Student")
                         .WithMany("Exams")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -166,9 +171,9 @@ namespace Exam.Persistence.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Exam.Domain.Entities.LessonEntity", b =>
+            modelBuilder.Entity("LessonEntity", b =>
                 {
-                    b.HasOne("Exam.Domain.Entities.TeacherEntity", "Teacher")
+                    b.HasOne("TeacherEntity", "Teacher")
                         .WithMany("Lessons")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -177,17 +182,17 @@ namespace Exam.Persistence.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("Exam.Domain.Entities.LessonEntity", b =>
+            modelBuilder.Entity("LessonEntity", b =>
                 {
                     b.Navigation("Exams");
                 });
 
-            modelBuilder.Entity("Exam.Domain.Entities.StudentEntity", b =>
+            modelBuilder.Entity("StudentEntity", b =>
                 {
                     b.Navigation("Exams");
                 });
 
-            modelBuilder.Entity("Exam.Domain.Entities.TeacherEntity", b =>
+            modelBuilder.Entity("TeacherEntity", b =>
                 {
                     b.Navigation("Lessons");
                 });

@@ -6,56 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Exam.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class second : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_ExamEntities",
-                table: "ExamEntities");
-
-            migrationBuilder.DropColumn(
-                name: "Name",
-                table: "ExamEntities");
-
-            migrationBuilder.RenameTable(
-                name: "ExamEntities",
-                newName: "Exams");
-
-            migrationBuilder.AddColumn<DateTime>(
-                name: "ExamDate",
-                table: "Exams",
-                type: "date",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
-            migrationBuilder.AddColumn<Guid>(
-                name: "LessonId",
-                table: "Exams",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
-
-            migrationBuilder.AddColumn<int>(
-                name: "Score",
-                table: "Exams",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<Guid>(
-                name: "StudentId",
-                table: "Exams",
-                type: "uniqueidentifier",
-                nullable: false,
-                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Exams",
-                table: "Exams",
-                column: "Id");
-
             migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
@@ -111,38 +66,56 @@ namespace Exam.Persistence.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Exams",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ExamDate = table.Column<DateTime>(type: "date", nullable: false),
+                    Score = table.Column<int>(type: "int", nullable: false),
+                    LessonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Exams_Lessons_LessonId",
+                        column: x => x.LessonId,
+                        principalTable: "Lessons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Exams_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exams_LessonId",
+                table: "Exams",
+                column: "LessonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exams_StudentId",
+                table: "Exams",
+                column: "StudentId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_Lessons_TeacherId",
                 table: "Lessons",
                 column: "TeacherId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Exams_Lessons_Id",
-                table: "Exams",
-                column: "Id",
-                principalTable: "Lessons",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Exams_Students_Id",
-                table: "Exams",
-                column: "Id",
-                principalTable: "Students",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Exams_Lessons_Id",
-                table: "Exams");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Exams_Students_Id",
-                table: "Exams");
+            migrationBuilder.DropTable(
+                name: "Exams");
 
             migrationBuilder.DropTable(
                 name: "Lessons");
@@ -152,41 +125,6 @@ namespace Exam.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Teachers");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Exams",
-                table: "Exams");
-
-            migrationBuilder.DropColumn(
-                name: "ExamDate",
-                table: "Exams");
-
-            migrationBuilder.DropColumn(
-                name: "LessonId",
-                table: "Exams");
-
-            migrationBuilder.DropColumn(
-                name: "Score",
-                table: "Exams");
-
-            migrationBuilder.DropColumn(
-                name: "StudentId",
-                table: "Exams");
-
-            migrationBuilder.RenameTable(
-                name: "Exams",
-                newName: "ExamEntities");
-
-            migrationBuilder.AddColumn<string>(
-                name: "Name",
-                table: "ExamEntities",
-                type: "nvarchar(max)",
-                nullable: true);
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_ExamEntities",
-                table: "ExamEntities",
-                column: "Id");
         }
     }
 }
